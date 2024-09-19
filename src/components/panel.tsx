@@ -1,9 +1,15 @@
 import { createResource, type Component } from "solid-js";
 import type { Panel as IPanel } from "../types/Panel";
-import { readTextFile } from '@tauri-apps/plugin-fs';
+import { readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
+import Renderer from "./editor/renderer";
 
 const Panel: Component<IPanel> = (panel) => {
-  const [content] = createResource(() => panel.file.fullPath, (path) => readTextFile(path))
+  const [content, { mutate }] = createResource(() => panel.file.fullPath, (path) => readTextFile(path))
+
+  const handleFileUpdate = async (content: string): Promise<void> => {
+    mutate(content);
+    await writeTextFile(panel.file.fullPath, content);
+  }
 
   return (
     <div>
@@ -12,7 +18,10 @@ const Panel: Component<IPanel> = (panel) => {
       </p>
 
       <div>
-        <pre>{content()}</pre>
+        <Renderer
+          content={content() ?? ""}
+          onContentUpdate={handleFileUpdate}
+        />
       </div>
     </div>
   )

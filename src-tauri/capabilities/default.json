@@ -9,6 +9,8 @@
     "core:default",
     "shell:allow-open",
     "dialog:default",
-    "fs:default"
+    "fs:default",
+    "fs:allow-read-text-file",
+    "fs:allow-write-text-file"
   ]
 }
