@@ -11,9 +11,9 @@
   "app": {
     "windows": [
       {
-        "title": "osmium",
-        "width": 800,
-        "height": 600
+        "title": "Osmium",
+        "width": 1000,
+        "height": 720
       }
     ],
     "security": {
