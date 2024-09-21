@@ -25,8 +25,8 @@ const VaultLayout: ParentComponent = (props) => {
   }
 
   return (
-    <div class="flex">
-      <div>
+    <div class="flex w-screen h-screen">
+      <div class="flex-shrink-0">
         <Show when={vault.path()}>
           {vaultPath => (
             <div>
@@ -41,7 +41,7 @@ const VaultLayout: ParentComponent = (props) => {
         </Show>
       </div>
 
-      <main>
+      <main class="flex w-full overflow-x-hidden">
         <Show when={panels.length > 0}>
           <For each={panels}>
             {panel => <Panel {...panel} />}

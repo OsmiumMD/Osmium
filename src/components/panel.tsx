@@ -5,8 +5,6 @@ import Renderer from "./editor/renderer";
 import { File } from "../types/File";
 
 const Panel: Component<IPanel> = (panel) => {
-  
-
   const [currentlyActive, setCurrentlyActive] = createSignal<File | undefined>(panel.files[0]);
 
   const TextFile: Component<File> = (file) => {
@@ -18,7 +16,7 @@ const Panel: Component<IPanel> = (panel) => {
     }
 
     return (
-      <div>
+      <div class="flex h-full overflow-y-hidden">
         <Renderer
           content={content() ?? ""}
           onContentUpdate={handleFileUpdate}
@@ -28,8 +26,8 @@ const Panel: Component<IPanel> = (panel) => {
   }
 
   return (
-    <div>
-      <nav class="flex">
+    <div class="flex flex-col w-full h-full">
+      <nav class="flex w-full overflow-x-auto bg-dark/20">
         <For each={panel.files}>
           {(file) => (
             <button
