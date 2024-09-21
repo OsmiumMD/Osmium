@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@codemirror/view": "^6.33.0",
     "@solidjs/router": "^0.14.5",
     "@tauri-apps/api": ">=2.0.0-rc.0",
     "@tauri-apps/plugin-dialog": "^2.0.0-rc",
