@@ -23,6 +23,7 @@ const Renderer: Component<{
       
       extensions: [
         theme,
+        EditorView.lineWrapping
         // zebraStripes(),
       ]
     });
