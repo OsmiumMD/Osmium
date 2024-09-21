@@ -9,7 +9,8 @@ const HomeView: Component = () => {
   const handleSelectVault = async (): Promise<void> => {
     const folder = await open({
       multiple: false,
-      directory: true
+      directory: true,
+      recursive: true
     });
 
     // user canceled.
