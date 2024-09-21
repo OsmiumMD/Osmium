@@ -1,28 +1,50 @@
-import { createResource, type Component } from "solid-js";
+import { createResource, createSignal, For, Show, type Component } from "solid-js";
 import type { Panel as IPanel } from "../types/Panel";
 import { readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
 import Renderer from "./editor/renderer";
+import { File } from "../types/File";
 
 const Panel: Component<IPanel> = (panel) => {
-  const [content, { mutate }] = createResource(() => panel.file.fullPath, (path) => readTextFile(path))
+  
 
-  const handleFileUpdate = async (content: string): Promise<void> => {
-    mutate(content);
-    await writeTextFile(panel.file.fullPath, content);
-  }
+  const [currentlyActive, setCurrentlyActive] = createSignal<File | undefined>(panel.files[0]);
 
-  return (
-    <div>
-      <p>
-        {panel.file.name}
-      </p>
+  const TextFile: Component<File> = (file) => {
+    const [content, { mutate }] = createResource(() => file.fullPath, (path) => readTextFile(path))
 
+    const handleFileUpdate = async (content: string): Promise<void> => {
+      mutate(content);
+      await writeTextFile(file.fullPath, content);
+    }
+
+    return (
       <div>
         <Renderer
           content={content() ?? ""}
           onContentUpdate={handleFileUpdate}
         />
       </div>
+    )
+  }
+
+  return (
+    <div>
+      <nav class="flex">
+        <For each={panel.files}>
+          {(file) => (
+            <button
+              classList={{ active: file === currentlyActive() }}
+              onClick={() => setCurrentlyActive(file)}
+            >
+              {file.name}
+            </button>
+          )}
+        </For>
+      </nav>
+
+      <Show when={currentlyActive()}>
+        {file => <TextFile {...file()} />}
+      </Show>
     </div>
   )
 };
