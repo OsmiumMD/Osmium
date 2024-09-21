@@ -18,6 +18,7 @@ const Panel: Component<IPanel> = (panel) => {
     return (
       <div class="flex h-full overflow-y-hidden">
         <Renderer
+          file={file}
           content={content() ?? ""}
           onContentUpdate={handleFileUpdate}
         />
